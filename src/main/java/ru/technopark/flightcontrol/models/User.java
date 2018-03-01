@@ -14,17 +14,11 @@ public class User {
     private String hash;
     private static final Charset CHARSET = StandardCharsets.UTF_8;
 
-    public User(Number id, String email, String login, String pass, Logger logger) {
+    public User(Number id, String email, String login, String pass) {
         this.id = id;
         this.email = email;
         this.login = login;
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            setHash(digest, pass);
-        } catch (NoSuchAlgorithmException exception) {
-            logger.error("Hashing algorithm name is incorrect");
-            hash = "";
-        }
+        changePass(pass);
     }
 
     public Number getId() {
@@ -62,7 +56,7 @@ public class User {
     }
 
     private void setHash(MessageDigest digest, String pass) {
-        byte[] hashed = digest.digest(pass.getBytes(CHARSET));
+        final byte[] hashed = digest.digest(pass.getBytes(CHARSET));
         hash = new String(hashed);
     }
 
