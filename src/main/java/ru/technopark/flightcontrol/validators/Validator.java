@@ -44,7 +44,7 @@ public class Validator {
         validateField("name", name, 5);
         validateField("email", email, 10);
         validateField("pass", pass, 6);
-        if (pass != null && pass.equals(name) || pass.equals(email)) {
+        if (pass != null && (pass.equals(name) || pass.equals(email))) {
             throw new RequestParamsException("pass", "Password is equals to another fields");
         }
     }
