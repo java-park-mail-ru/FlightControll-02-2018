@@ -1,12 +1,16 @@
 package ru.technopark.flightcontrol.dao;
 
 import org.slf4j.Logger;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ru.technopark.flightcontrol.models.User;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
+@Scope(value = "singleton")
+@Component
 public final class UsersManager {
 
     private final HashMap<Number, User> usersMap = new HashMap<>();
@@ -64,17 +68,4 @@ public final class UsersManager {
         return isFree;
     }
 
-
-    private static UsersManager instance;
-
-    private UsersManager() {
-
-    }
-
-    public static UsersManager getManager() {
-        if (instance == null) {
-            instance = new UsersManager();
-        }
-        return instance;
-    }
 }

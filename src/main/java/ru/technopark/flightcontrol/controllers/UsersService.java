@@ -2,6 +2,7 @@ package ru.technopark.flightcontrol.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +21,13 @@ import javax.servlet.http.HttpSession;
 public class UsersService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersService.class);
     private static final Validator VALIDATOR = new Validator();
+    @Autowired
     private UsersManager manager;
     private User curUser;
     private boolean hasUser;
 
     private void prepareEnviron(HttpSession session) {
         final Number userId = (Number) session.getAttribute("userId");
-        manager = UsersManager.getManager();
         curUser = manager.getUser(userId);
         hasUser = curUser != null && userId != null;
     }
