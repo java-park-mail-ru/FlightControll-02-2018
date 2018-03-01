@@ -15,8 +15,11 @@ import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 import ru.technopark.flightcontrol.wrappers.RequestParamsException;
 
 import javax.servlet.http.HttpSession;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 @RestController
+@CrossOrigin(origins = "https://super-frontend.herokuapp.com/")
 @RequestMapping(value = "/api/user", consumes = "application/json")
 public class UsersService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersService.class);
@@ -50,7 +53,6 @@ public class UsersService {
         return ResponseEntity.ok().build();
     }
 
-    @CrossOrigin(origins = "localhost:8080")
     @PostMapping(value = "/get")
     public ResponseEntity getUser(HttpSession session) {
         final User curUser = prepareEnviron(session);
