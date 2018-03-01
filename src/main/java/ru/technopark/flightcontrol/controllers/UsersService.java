@@ -13,10 +13,7 @@ import ru.technopark.flightcontrol.wrappers.AuthWrapper;
 import ru.technopark.flightcontrol.wrappers.FieldsError;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 import ru.technopark.flightcontrol.wrappers.RequestParamsException;
-
 import javax.servlet.http.HttpSession;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 
 @RestController
 @CrossOrigin(origins = "https://super-frontend.herokuapp.com/")
