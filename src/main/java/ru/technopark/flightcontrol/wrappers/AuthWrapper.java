@@ -1,7 +1,5 @@
 package ru.technopark.flightcontrol.wrappers;
 
-import ru.technopark.flightcontrol.validators.Validator;
-
 public class AuthWrapper extends Wrapper {
     private String name;
     private String pass;

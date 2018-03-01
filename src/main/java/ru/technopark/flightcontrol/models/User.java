@@ -1,6 +1,5 @@
 package ru.technopark.flightcontrol.models;
 
-import org.slf4j.Logger;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -27,7 +26,6 @@ public class User {
 
     public String getEmail() {
         return email;
-
     }
 
     public void setEmail(String email) {
@@ -44,15 +42,11 @@ public class User {
 
     public void changePass(String pass) {
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            final MessageDigest digest = MessageDigest.getInstance("SHA-256");
             setHash(digest, pass);
         } catch (NoSuchAlgorithmException exception) {
             hash = "";
         }
-    }
-
-    public String getHash() {
-        return hash;
     }
 
     private void setHash(MessageDigest digest, String pass) {
@@ -63,13 +57,12 @@ public class User {
     public boolean checkHash(String pass) {
         String newHash;
         try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashed = digest.digest(pass.getBytes(CHARSET));
+            final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            final byte[] hashed = digest.digest(pass.getBytes(CHARSET));
             newHash = new String(hashed);
         } catch (NoSuchAlgorithmException exception) {
             newHash = "";
         }
-
         return this.hash.equals(newHash);
     }
 }
