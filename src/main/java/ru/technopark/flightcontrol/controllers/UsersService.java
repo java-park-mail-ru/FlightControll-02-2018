@@ -23,20 +23,17 @@ public class UsersService {
     private static final Validator VALIDATOR = new Validator();
     @Autowired
     private UsersManager manager;
-    private User curUser;
-    private boolean hasUser;
 
-    private void prepareEnviron(HttpSession session) {
+    private User prepareEnviron(HttpSession session) {
         final Number userId = (Number) session.getAttribute("userId");
-        curUser = manager.getUser(userId);
-        hasUser = curUser != null && userId != null;
+        return manager.getUser(userId);
     }
 
 
     @PostMapping(value = "/register")
     public ResponseEntity registerUser(HttpSession session, @RequestBody RegisterWrapper request) {
-        prepareEnviron(session);
-        if (hasUser) {
+        User curUser = prepareEnviron(session);
+        if (curUser != null) {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
         try {
@@ -56,8 +53,8 @@ public class UsersService {
     @CrossOrigin(origins = "localhost:8080")
     @PostMapping(value = "/get")
     public ResponseEntity getUser(HttpSession session) {
-        prepareEnviron(session);
-        if (!hasUser) {
+        final User curUser = prepareEnviron(session);
+        if (curUser == null) {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
         return ResponseEntity.ok(curUser);
@@ -66,8 +63,8 @@ public class UsersService {
 
     @PostMapping(value = "/authenticate")
     public ResponseEntity authUser(HttpSession session, @RequestBody AuthWrapper request) {
-        prepareEnviron(session);
-        if (hasUser) {
+        final User curUser = prepareEnviron(session);
+        if (curUser != null) {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
 
@@ -89,8 +86,8 @@ public class UsersService {
 
     @PostMapping(value = "/change")
     public ResponseEntity changeUser(HttpSession session, @RequestBody RegisterWrapper request) {
-        prepareEnviron(session);
-        if (!hasUser) {
+        final User curUser = prepareEnviron(session);
+        if (curUser == null) {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
         manager.changeUser(curUser, request);
@@ -99,8 +96,8 @@ public class UsersService {
 
     @PostMapping(value = "/logout")
     public ResponseEntity logout(HttpSession session) {
-        prepareEnviron(session);
-        if (!hasUser) {
+        final User curUser = prepareEnviron(session);
+        if (curUser != null) {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
         session.removeAttribute("userId");
