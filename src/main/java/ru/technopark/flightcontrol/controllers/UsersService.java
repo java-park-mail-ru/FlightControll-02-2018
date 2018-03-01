@@ -15,8 +15,8 @@ import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 import ru.technopark.flightcontrol.wrappers.RequestParamsException;
 import javax.servlet.http.HttpSession;
 
+@CrossOrigin(origins = "https://super-frontend.herokuapp.com", maxAge = 3600)
 @RestController
-@CrossOrigin(origins = "https://super-frontend.herokuapp.com/")
 @RequestMapping(value = "/api/user", consumes = "application/json")
 public class UsersService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersService.class);
@@ -28,7 +28,6 @@ public class UsersService {
         final Number userId = (Number) session.getAttribute("userId");
         return manager.getUser(userId);
     }
-
 
     @PostMapping(value = "/register")
     public ResponseEntity registerUser(HttpSession session, @RequestBody RegisterWrapper request) {
