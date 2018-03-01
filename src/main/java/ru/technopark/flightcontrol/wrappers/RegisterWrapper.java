@@ -1,5 +1,7 @@
 package ru.technopark.flightcontrol.wrappers;
 
+import ru.technopark.flightcontrol.validators.Validator;
+
 public class RegisterWrapper extends Wrapper {
     private String name;
     private String email;
@@ -13,19 +15,6 @@ public class RegisterWrapper extends Wrapper {
 
     public RegisterWrapper() {
 
-    }
-
-    @Override
-    public void validate() throws RequestParamsException {
-        if (name == null && email == null && pass == null) {
-            throw new RequestParamsException(null, "Request is empty");
-        }
-        validateField("name", name, 5);
-        validateField("email", email, 10);
-        validateField("pass", pass, 6);
-        if (pass.equals(name) || pass.equals(email)) {
-            throw new RequestParamsException("pass", "Password is equals to another fields");
-        }
     }
 
     public String getName() {

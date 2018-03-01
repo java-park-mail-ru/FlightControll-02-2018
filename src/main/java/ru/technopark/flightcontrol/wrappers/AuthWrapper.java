@@ -1,5 +1,7 @@
 package ru.technopark.flightcontrol.wrappers;
 
+import ru.technopark.flightcontrol.validators.Validator;
+
 public class AuthWrapper extends Wrapper {
     private String name;
     private String pass;
@@ -37,19 +39,5 @@ public class AuthWrapper extends Wrapper {
 
     public void setRepass(String repass) {
         this.repass = repass;
-    }
-
-    @Override
-    public void validate() throws RequestParamsException {
-        //todo: change exception wrap
-        if (name == null && pass == null && repass == null) {
-            throw new RequestParamsException(null, "Request is empty");
-        }
-        validateField("name", name, 5);
-        validateField("pass", pass, 6);
-        validateField("repass", pass, 6);
-        if (!pass.equals(repass)) {
-            throw new RequestParamsException("pass", "Password is not equals to password");
-        }
     }
 }

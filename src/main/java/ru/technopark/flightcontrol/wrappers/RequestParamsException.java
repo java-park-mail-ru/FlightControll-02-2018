@@ -3,7 +3,7 @@ package ru.technopark.flightcontrol.wrappers;
 public class RequestParamsException extends Exception {
     private FieldsError errors;
 
-    RequestParamsException(String field, String message) {
+    public RequestParamsException(String field, String message) {
         errors = new FieldsError(field, message);
     }
 

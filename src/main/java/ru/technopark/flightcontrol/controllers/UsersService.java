@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.technopark.flightcontrol.dao.UsersManager;
 import ru.technopark.flightcontrol.models.User;
+import ru.technopark.flightcontrol.validators.Validator;
 import ru.technopark.flightcontrol.wrappers.AuthWrapper;
 import ru.technopark.flightcontrol.wrappers.FieldsError;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpSession;
 @RequestMapping(value = "/api/user", consumes = "application/json")
 public class UsersService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersService.class);
+    private static final Validator VALIDATOR = new Validator();
     private UsersManager manager;
     private User curUser;
     private boolean hasUser;
@@ -37,7 +39,7 @@ public class UsersService {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
         try {
-            request.validate();
+            VALIDATOR.validate(request);
             curUser = manager.createUser(request, LOGGER);
             if (curUser == null) {
                 return ResponseEntity.badRequest().body(new FieldsError("user", " is used"));
@@ -69,7 +71,7 @@ public class UsersService {
         }
 
         try {
-            request.validate();
+            VALIDATOR.validate(request);
             final User user = manager.getByName(request.getName());
             if (user == null) {
                 return ResponseEntity.badRequest().body("Unsaved user");
