@@ -26,7 +26,7 @@ public final class UsersManager {
     public User createUser(RegisterWrapper  params, Logger logger) {
         final Number id = ID_GENERATOR.getAndIncrement();
         User user = null;
-        if (!userNotContains(id) && checkName(params.getName())) {
+        if (userNotContains(id) && checkName(params.getName())) {
              user = new User(id, params.getEmail(), params.getName(), params.getPass(), logger);
         }
         usersMap.put(id, user);
