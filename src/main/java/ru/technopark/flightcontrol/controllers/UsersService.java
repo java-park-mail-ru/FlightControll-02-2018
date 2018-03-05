@@ -2,7 +2,6 @@ package ru.technopark.flightcontrol.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,12 +27,12 @@ public class UsersService {
     UsersService(UsersManager manager) {
         this.manager = manager;
         final ArrayList<RegisterWrapper> usersData = new ArrayList<>();
-        usersData.add(new RegisterWrapper("test","test@test.ru","123321","123321"));
-        usersData.add(new RegisterWrapper("alexander","test@test.ru","123321","123321"));
-        usersData.add(new RegisterWrapper("alex","test@test.ru","123321","123321"));
-        usersData.add(new RegisterWrapper("sergey","test@test.ru","123321","123321"));
-        for(RegisterWrapper user: usersData) {
-            this.manager.createUser(user,LOGGER);
+        usersData.add(new RegisterWrapper("test", "test@test.ru", "123321", "123321"));
+        usersData.add(new RegisterWrapper("alexander", "test@test.ru", "123321", "123321"));
+        usersData.add(new RegisterWrapper("alex", "test@test.ru", "123321", "123321"));
+        usersData.add(new RegisterWrapper("sergey", "test@test.ru", "123321", "123321"));
+        for (RegisterWrapper user: usersData) {
+            this.manager.createUser(user, LOGGER);
         }
     }
 
