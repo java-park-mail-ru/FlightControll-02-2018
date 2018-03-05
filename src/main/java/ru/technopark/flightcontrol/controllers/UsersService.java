@@ -14,6 +14,7 @@ import ru.technopark.flightcontrol.wrappers.FieldsError;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 import ru.technopark.flightcontrol.wrappers.RequestParamsException;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 @CrossOrigin(origins = "https://super-frontend.herokuapp.com", maxAge = 3600)
 @RestController
@@ -21,8 +22,20 @@ import javax.servlet.http.HttpSession;
 public class UsersService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersService.class);
     private static final Validator VALIDATOR = new Validator();
-    @Autowired
+    //@Autowired
     private UsersManager manager;
+
+    UsersService(UsersManager manager) {
+        this.manager = manager;
+        final ArrayList<RegisterWrapper> usersData = new ArrayList<>();
+        usersData.add(new RegisterWrapper("test","test@test.ru","123321","123321"));
+        usersData.add(new RegisterWrapper("alexander","test@test.ru","123321","123321"));
+        usersData.add(new RegisterWrapper("alex","test@test.ru","123321","123321"));
+        usersData.add(new RegisterWrapper("sergey","test@test.ru","123321","123321"));
+        for(RegisterWrapper user: usersData) {
+            this.manager.createUser(user,LOGGER);
+        }
+    }
 
     private User prepareEnviron(HttpSession session) {
         final Number userId = (Number) session.getAttribute("userId");
@@ -49,7 +62,7 @@ public class UsersService {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping(value = "/get")
+    @GetMapping(value = "/get")
     public ResponseEntity getUser(HttpSession session) {
         final User curUser = prepareEnviron(session);
         if (curUser == null) {
@@ -95,7 +108,7 @@ public class UsersService {
     @PostMapping(value = "/logout")
     public ResponseEntity logout(HttpSession session) {
         final User curUser = prepareEnviron(session);
-        if (curUser != null) {
+        if (curUser == null) {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
         session.removeAttribute("userId");

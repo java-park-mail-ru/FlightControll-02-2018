@@ -21,30 +21,27 @@ public class Validator {
     public void validate(AuthWrapper wrapper) throws RequestParamsException {
         final String name = wrapper.getName();
         final String pass = wrapper.getPass();
-        final String rePass = wrapper.getRepass();
-        if (name == null && pass == null && rePass == null) {
+        if (name == null && pass == null) {
             throw new RequestParamsException(null, "Request is empty");
         }
 
         validateField("name", name, 5);
         validateField("pass", pass, 6);
-        validateField("repass", rePass, 6);
-        if (pass != null && !pass.equals(rePass)) {
-            throw new RequestParamsException("pass", "Password is not equals to password");
-        }
     }
 
     public void validate(RegisterWrapper wrapper) throws RequestParamsException {
         final String name = wrapper.getName();
         final String pass = wrapper.getPass();
         final String email = wrapper.getEmail();
+        final String rePass = wrapper.getRepass();
         if (name == null && email == null && pass == null) {
             throw new RequestParamsException(null, "Request is empty");
         }
         validateField("name", name, 5);
         validateField("email", email, 10);
         validateField("pass", pass, 6);
-        if (pass != null && (pass.equals(name) || pass.equals(email))) {
+        validateField("repass", rePass, 6);
+        if (!pass.equals(rePass) || pass.equals(name) || pass.equals(email)) {
             throw new RequestParamsException("pass", "Password is equals to another fields");
         }
     }

@@ -1,14 +1,16 @@
 package ru.technopark.flightcontrol.wrappers;
 
-public class RegisterWrapper extends Wrapper {
+public class RegisterWrapper {
     private String name;
     private String email;
     private String pass;
+    private String repass;
 
-    public RegisterWrapper(String name, String email, String pass) {
+    public RegisterWrapper(String name, String email, String pass, String repass) {
         this.name = name;
         this.email = email;
         this.pass = pass;
+        this.repass = repass;
     }
 
     public RegisterWrapper() {
@@ -37,5 +39,13 @@ public class RegisterWrapper extends Wrapper {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getRepass() {
+        return repass;
+    }
+
+    public void setRepass(String repass) {
+        this.repass = repass;
     }
 }
