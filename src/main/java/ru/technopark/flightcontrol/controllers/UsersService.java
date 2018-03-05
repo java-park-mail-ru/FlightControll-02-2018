@@ -15,7 +15,7 @@ import ru.technopark.flightcontrol.wrappers.RequestParamsException;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
-@CrossOrigin(origins = "https://flight-control-test.herokuapp.com", maxAge = 3600)
+@CrossOrigin(origins = "https://flight-control-test.herokuapp.com", allowCredentials = "true", maxAge = 3600)
 @RestController
 @RequestMapping(value = "/api/user", consumes = "application/json")
 public class UsersService {
