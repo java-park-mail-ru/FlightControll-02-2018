@@ -4,8 +4,9 @@ import ru.technopark.flightcontrol.wrappers.AuthWrapper;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 import ru.technopark.flightcontrol.wrappers.RequestParamsException;
 
+//todo: use springs validator
 public class Validator {
-    public void validateField(String name, String field, int requriedLength) throws RequestParamsException {
+    public static void validateField(String name, String field, int requriedLength) throws RequestParamsException {
         if (field == null) {
             throw new RequestParamsException(name, name + " is empty");
         }
@@ -18,18 +19,18 @@ public class Validator {
         }
     }
 
-    public void validate(AuthWrapper wrapper) throws RequestParamsException {
-        final String name = wrapper.getName();
+    public static void validate(AuthWrapper wrapper) throws RequestParamsException {
+        final String email = wrapper.getEmail();
         final String pass = wrapper.getPass();
-        if (name == null && pass == null) {
+        if (email == null && pass == null) {
             throw new RequestParamsException(null, "Request is empty");
         }
 
-        validateField("name", name, 5);
+        validateField("name", email, 5);
         validateField("pass", pass, 6);
     }
 
-    public void validate(RegisterWrapper wrapper) throws RequestParamsException {
+    public static void validate(RegisterWrapper wrapper) throws RequestParamsException {
         final String name = wrapper.getName();
         final String pass = wrapper.getPass();
         final String email = wrapper.getEmail();

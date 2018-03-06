@@ -37,10 +37,10 @@ public final class UsersManager {
         return user;
     }
 
-    public User getByName(String login) {
+    public User getByEmail(String email) {
         User matchedUser = null;
         for (User user : usersMap.values()) {
-            if (user != null && user.getLogin().equals(login)) {
+            if (user != null && user.getEmail().equals(email)) {
                 matchedUser = user;
             }
         }
@@ -49,7 +49,7 @@ public final class UsersManager {
 
 
     public void changeUser(User user, RegisterWrapper params) {
-        user.setLogin(params.getName());
+        user.setName(params.getName());
         user.setEmail(params.getEmail());
         user.changePass(params.getPass());
     }
@@ -61,7 +61,7 @@ public final class UsersManager {
     private boolean checkName(String name) {
         boolean isFree = true;
         for (User user : usersMap.values()) {
-            if (user != null && user.getLogin().equals(name)) {
+            if (user != null && user.getName().equals(name)) {
                 isFree = false;
             }
         }

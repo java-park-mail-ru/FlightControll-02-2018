@@ -9,14 +9,14 @@ import java.security.NoSuchAlgorithmException;
 public class User {
     private Number id;
     private String email;
-    private String login;
+    private String name;
     private String hash;
     private static final Charset CHARSET = StandardCharsets.UTF_8;
 
     public User(Number id, String email, String login, String pass) {
         this.id = id;
         this.email = email;
-        this.login = login;
+        this.name = login;
         changePass(pass);
     }
 
@@ -32,12 +32,12 @@ public class User {
         this.email = email;
     }
 
-    public String getLogin() {
-        return login;
+    public String getName() {
+        return name;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void changePass(String pass) {

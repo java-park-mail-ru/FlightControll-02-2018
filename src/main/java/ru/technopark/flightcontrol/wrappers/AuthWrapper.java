@@ -1,7 +1,7 @@
 package ru.technopark.flightcontrol.wrappers;
 
 public class AuthWrapper {
-    private String name;
+    private String email;
     private String pass;
 
     public AuthWrapper() {
@@ -9,16 +9,16 @@ public class AuthWrapper {
     }
 
     public AuthWrapper(String email, String pass) {
-        this.name = email;
+        this.email = email;
         this.pass = pass;
     }
 
-    public String getName() {
-        return name;
+    public String getEmail() {
+        return email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String name) {
+        this.email = name;
     }
 
     public String getPass() {

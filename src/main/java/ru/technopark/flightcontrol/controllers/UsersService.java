@@ -20,8 +20,6 @@ import java.util.ArrayList;
 @RequestMapping(value = "/api/user", consumes = "application/json")
 public class UsersService {
     private static final Logger LOGGER = LoggerFactory.getLogger(UsersService.class);
-    private static final Validator VALIDATOR = new Validator();
-    //@Autowired
     private UsersManager manager;
 
     UsersService(UsersManager manager) {
@@ -48,7 +46,7 @@ public class UsersService {
             return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
         }
         try {
-            VALIDATOR.validate(request);
+            Validator.validate(request);
             curUser = manager.createUser(request, LOGGER);
             if (curUser == null) {
                 return ResponseEntity.badRequest().body(new FieldsError("user", " is used"));
@@ -79,8 +77,8 @@ public class UsersService {
         }
 
         try {
-            VALIDATOR.validate(request);
-            final User user = manager.getByName(request.getName());
+            Validator.validate(request);
+            final User user = manager.getByEmail(request.getEmail());
             if (user == null) {
                 return ResponseEntity.badRequest().body("Unsaved user");
             }
