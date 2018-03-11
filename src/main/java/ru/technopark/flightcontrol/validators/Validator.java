@@ -54,7 +54,7 @@ public class Validator {
         if (page == 0 || size == 0) {
             throw new RequestParamsException(null, "Request is empty");
         }
-        boolean checkBorders = page > 10 || size > 100 ;
+        boolean checkBorders = page > 10 || size > 100;
         checkBorders = checkBorders || page < 1 || size < 1;
         if (checkBorders) {
             throw new RequestParamsException("page", "Page param is ambigious");

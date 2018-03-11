@@ -113,7 +113,7 @@ public class UsersService {
     @PostMapping(value = "/leaders")
     public ResponseEntity leaders(HttpSession session, @RequestBody PaginateWrapper request) {
         final ArrayList<User> leaders;
-        try{
+        try {
             Validator.validate(request);
             leaders = manager.getLeaders(request.getPage(), request.getSize());
         } catch (RequestParamsException exception) {

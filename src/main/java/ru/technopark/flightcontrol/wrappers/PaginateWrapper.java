@@ -7,10 +7,12 @@ public class PaginateWrapper {
     public PaginateWrapper() {
 
     }
+
     public PaginateWrapper(int page, int size) {
         this.page = page;
         this.size = size;
     }
+
     public PaginateWrapper(int page) {
         this.page = page;
     }

@@ -8,9 +8,7 @@ import ru.technopark.flightcontrol.models.User;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Scope(value = "singleton")
@@ -76,8 +74,8 @@ public final class UsersManager {
     public ArrayList<User> getLeaders(int page, int size) {
         final ArrayList<User> ratingTable = new ArrayList<>(usersMap.values());
         ratingTable.sort(ratingComparator);
-        final int offset = (page-1) * size;
-        return new ArrayList<>(ratingTable.subList(offset, offset+size));
+        final int offset = (page - 1) * size;
+        return new ArrayList<>(ratingTable.subList(offset, offset + size));
     }
 
 }
