@@ -8,10 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.technopark.flightcontrol.dao.UsersManager;
 import ru.technopark.flightcontrol.models.User;
 import ru.technopark.flightcontrol.validators.Validator;
-import ru.technopark.flightcontrol.wrappers.AuthWrapper;
-import ru.technopark.flightcontrol.wrappers.FieldsError;
-import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
-import ru.technopark.flightcontrol.wrappers.RequestParamsException;
+import ru.technopark.flightcontrol.wrappers.*;
+
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 
@@ -110,6 +108,18 @@ public class UsersService {
         }
         session.removeAttribute("userId");
         return  ResponseEntity.ok().build();
+    }
+
+    @PostMapping(value = "/leaders")
+    public ResponseEntity leaders(HttpSession session, @RequestBody PaginateWrapper request) {
+        final ArrayList<User> leaders;
+        try{
+            Validator.validate(request);
+            leaders = manager.getLeaders(request.getPage(), request.getSize());
+        } catch (RequestParamsException exception) {
+            return ResponseEntity.badRequest().body(exception.getFieldErrors());
+        }
+        return  ResponseEntity.ok(leaders);
     }
 
 }

@@ -3,10 +3,14 @@ package ru.technopark.flightcontrol.dao;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import ru.technopark.flightcontrol.comparators.RatingsComparator;
 import ru.technopark.flightcontrol.models.User;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Scope(value = "singleton")
@@ -15,6 +19,7 @@ public final class UsersManager {
 
     private final HashMap<Number, User> usersMap = new HashMap<>();
     private static final AtomicLong ID_GENERATOR = new AtomicLong();
+    private final RatingsComparator<Object> ratingComparator = new RatingsComparator<>();
 
     public boolean authenticate(User user, String pass) {
         return user.checkHash(pass);
@@ -66,6 +71,13 @@ public final class UsersManager {
             }
         }
         return isFree;
+    }
+
+    public ArrayList<User> getLeaders(int page, int size) {
+        final ArrayList<User> ratingTable = new ArrayList<>(usersMap.values());
+        ratingTable.sort(ratingComparator);
+        final int offset = (page-1) * size;
+        return new ArrayList<>(ratingTable.subList(offset, offset+size));
     }
 
 }

@@ -1,6 +1,7 @@
 package ru.technopark.flightcontrol.validators;
 
 import ru.technopark.flightcontrol.wrappers.AuthWrapper;
+import ru.technopark.flightcontrol.wrappers.PaginateWrapper;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 import ru.technopark.flightcontrol.wrappers.RequestParamsException;
 
@@ -44,6 +45,19 @@ public class Validator {
         validateField("repass", rePass, 6);
         if (!pass.equals(rePass) || pass.equals(name) || pass.equals(email)) {
             throw new RequestParamsException("pass", "Password is equals to another fields");
+        }
+    }
+
+    public static void validate(PaginateWrapper wrapper) throws RequestParamsException {
+        final int page = wrapper.getPage();
+        final int size = wrapper.getSize();
+        if (page == 0 || size == 0) {
+            throw new RequestParamsException(null, "Request is empty");
+        }
+        boolean checkBorders = page > 10 || size > 100 ;
+        checkBorders = checkBorders || page < 1 || size < 1;
+        if (checkBorders) {
+            throw new RequestParamsException("page", "Page param is ambigious");
         }
     }
 
