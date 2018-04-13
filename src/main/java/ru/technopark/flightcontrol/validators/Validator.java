@@ -51,13 +51,6 @@ public class Validator {
         validateImage(file);
     }
 
-    public static void validateImage(final MultipartFile file) throws RequestParamsException {
-        final String contentType = file.getContentType();
-        if(file.isEmpty() && !(contentType.equals("image/jpeg") || contentType.equals("image/png"))){
-            throw new RequestParamsException("image", "Image is not valid");
-        }
-    }
-
     public static void validate(PaginateWrapper wrapper) throws RequestParamsException {
         final int page = wrapper.getPage();
         final int size = wrapper.getSize();
@@ -68,6 +61,13 @@ public class Validator {
         checkBorders = checkBorders || page < 1 || size < 1;
         if (checkBorders) {
             throw new RequestParamsException("page", "Page param is ambigious");
+        }
+    }
+
+    public static void validateImage(final MultipartFile file) throws RequestParamsException {
+        final String contentType = file.getContentType();
+        if (file.isEmpty() && !(contentType.equals("image/jpeg") || contentType.equals("image/png"))) {
+            throw new RequestParamsException("image", "Image is not valid");
         }
     }
 

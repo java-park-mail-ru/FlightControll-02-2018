@@ -1,7 +1,6 @@
 package ru.technopark.flightcontrol.models;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.apache.tomcat.util.codec.binary.StringUtils;
@@ -43,7 +42,7 @@ public class User {
         return rate;
     }
 
-    public User(Number id, String email, String login, String pass, MultipartFile avatar) throws IOException{
+    public User(Number id, String email, String login, String pass, MultipartFile avatar) throws IOException {
         this.id = id;
         this.email = email;
         this.name = login;
@@ -51,7 +50,7 @@ public class User {
         changePass(pass);
     }
 
-    public void setAvatar(MultipartFile avatar) throws IOException{
+    public void setAvatar(MultipartFile avatar) throws IOException {
         final StringBuilder base64Avatar = new StringBuilder();
         base64Avatar.append("data:");
         base64Avatar.append(avatar.getContentType());
@@ -59,7 +58,7 @@ public class User {
         base64Avatar.append(
                 StringUtils.newStringUtf8(
                         Base64.encodeBase64(
-                                avatar.getBytes(),false
+                                avatar.getBytes(), false
                         )
                 )
         );

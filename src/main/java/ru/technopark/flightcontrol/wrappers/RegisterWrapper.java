@@ -1,7 +1,6 @@
 package ru.technopark.flightcontrol.wrappers;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 public class RegisterWrapper {
@@ -44,5 +43,7 @@ public class RegisterWrapper {
         return repeatPassword;
     }
 
-    public MultipartFile getImg() { return img; }
+    public MultipartFile getImg() {
+        return img;
+    }
 }

@@ -39,8 +39,7 @@ public final class UsersManager {
                 user = new User(id, params.getEmail(), params.getUserName(), params.getPassword(), params.getImg());
             }
             usersMap.put(id, user);
-        }
-        catch (IOException exception){
+        } catch (IOException exception) {
             logger.error("avatar is corrupted");
         }
         return user;

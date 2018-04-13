@@ -71,9 +71,9 @@ public class UsersService {
     @GetMapping(value = "/logged", consumes = "application/json")
     public ResponseEntity isLogged(HttpSession session) {
         final User curUser = prepareEnviron(session);
-        return curUser == null ?
-                ResponseEntity.status(HttpStatus.FORBIDDEN).build() :
-                ResponseEntity.ok().build();
+        return curUser == null
+                ? ResponseEntity.status(HttpStatus.FORBIDDEN).build()
+                : ResponseEntity.ok().build();
     }
 
 
