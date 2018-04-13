@@ -1,51 +1,48 @@
 package ru.technopark.flightcontrol.wrappers;
 
-public class RegisterWrapper {
-    private String name;
-    private String email;
-    private String pass;
-    private String repass;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
-    public RegisterWrapper(String name, String email, String pass, String repass) {
-        this.name = name;
+public class RegisterWrapper {
+    @JsonIgnore
+    private String username;
+    @JsonIgnore
+    private String email;
+    @JsonIgnore
+    private String password;
+    @JsonIgnore
+    private String repeatPassword;
+    @JsonIgnore
+    private MultipartFile img;
+
+    public RegisterWrapper(String name, String email, String password, String repass, MultipartFile img) {
+        this.username = name;
         this.email = email;
-        this.pass = pass;
-        this.repass = repass;
+        this.password = password;
+        this.repeatPassword = repass;
+        this.img = img;
     }
 
     public RegisterWrapper() {
 
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public String getUserName() {
+        return username;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public String getPassword() {
+        return password;
     }
 
-    public String getPass() {
-        return pass;
+    public String getRepeatPassword() {
+        return repeatPassword;
     }
 
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public String getRepass() {
-        return repass;
-    }
-
-    public void setRepass(String repass) {
-        this.repass = repass;
-    }
+    public MultipartFile getImg() { return img; }
 }

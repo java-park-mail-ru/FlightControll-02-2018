@@ -1,5 +1,6 @@
 package ru.technopark.flightcontrol.validators;
 
+import org.springframework.web.multipart.MultipartFile;
 import ru.technopark.flightcontrol.wrappers.AuthWrapper;
 import ru.technopark.flightcontrol.wrappers.PaginateWrapper;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
@@ -32,10 +33,11 @@ public class Validator {
     }
 
     public static void validate(RegisterWrapper wrapper) throws RequestParamsException {
-        final String name = wrapper.getName();
-        final String pass = wrapper.getPass();
+        final String name = wrapper.getUserName();
+        final String pass = wrapper.getPassword();
         final String email = wrapper.getEmail();
-        final String rePass = wrapper.getRepass();
+        final String rePass = wrapper.getRepeatPassword();
+        final MultipartFile file = wrapper.getImg();
         if (name == null && email == null && pass == null) {
             throw new RequestParamsException(null, "Request is empty");
         }
@@ -44,7 +46,15 @@ public class Validator {
         validateField("pass", pass, 6);
         validateField("repass", rePass, 6);
         if (!pass.equals(rePass) || pass.equals(name) || pass.equals(email)) {
-            throw new RequestParamsException("pass", "Password is equals to another fields");
+            throw new RequestParamsException("password", "Password is equals to another fields");
+        }
+        validateImage(file);
+    }
+
+    public static void validateImage(final MultipartFile file) throws RequestParamsException {
+        final String contentType = file.getContentType();
+        if(file.isEmpty() && !(contentType.equals("image/jpeg") || contentType.equals("image/png"))){
+            throw new RequestParamsException("image", "Image is not valid");
         }
     }
 

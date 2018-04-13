@@ -7,6 +7,7 @@ import ru.technopark.flightcontrol.comparators.RatingsComparator;
 import ru.technopark.flightcontrol.models.User;
 import ru.technopark.flightcontrol.wrappers.RegisterWrapper;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
@@ -31,12 +32,17 @@ public final class UsersManager {
     }
 
     public User createUser(RegisterWrapper  params, Logger logger) {
-        final Number id = ID_GENERATOR.getAndIncrement();
         User user = null;
-        if (userNotContains(id) && checkName(params.getName())) {
-             user = new User(id, params.getEmail(), params.getName(), params.getPass());
+        try {
+            final Number id = ID_GENERATOR.getAndIncrement();
+            if (userNotContains(id) && checkName(params.getUserName())) {
+                user = new User(id, params.getEmail(), params.getUserName(), params.getPassword(), params.getImg());
+            }
+            usersMap.put(id, user);
         }
-        usersMap.put(id, user);
+        catch (IOException exception){
+            logger.error("avatar is corrupted");
+        }
         return user;
     }
 
@@ -52,9 +58,9 @@ public final class UsersManager {
 
 
     public void changeUser(User user, RegisterWrapper params) {
-        user.setName(params.getName());
+        user.setName(params.getUserName());
         user.setEmail(params.getEmail());
-        user.changePass(params.getPass());
+        user.changePass(params.getPassword());
     }
 
     private boolean userNotContains(Number id) {
