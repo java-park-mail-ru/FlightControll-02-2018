@@ -126,7 +126,7 @@ public class UsersService {
         return  ResponseEntity.ok().build();
     }
 
-    @GetMapping(value = "/leaders", consumes = "application/json")
+    @PostMapping(value = "/leaders", consumes = "application/json")
     public ResponseEntity leaders(HttpSession session, @RequestBody PaginateWrapper request) {
         final ArrayList<User> leaders;
         try {
