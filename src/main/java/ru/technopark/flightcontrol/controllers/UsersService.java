@@ -2,6 +2,7 @@ package ru.technopark.flightcontrol.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +41,7 @@ public class UsersService {
                                        @RequestParam("email") String email,
                                        @RequestParam("password") String password,
                                        @RequestParam("password_repeat") String passwordRepeat,
-                                       @RequestParam("img") MultipartFile file) {
+                                       @RequestParam(value = "img", required = false) MultipartFile file) {
         final RegisterWrapper request = new RegisterWrapper(name, email, password, passwordRepeat, file);
         User curUser = prepareEnviron(session);
         if (curUser != null) {
@@ -103,11 +104,11 @@ public class UsersService {
 
     @PostMapping(value = "/change", consumes = "application/json")
     public ResponseEntity changeUser(HttpSession session,
-                                     @RequestParam("username") String name,
-                                     @RequestParam("email") String email,
-                                     @RequestParam("password") String password,
-                                     @RequestParam("password_repeat") String passwordRepeat,
-                                     @RequestParam("img") MultipartFile file) {
+                                     @RequestParam(value = "username") String name,
+                                     @RequestParam(value = "email") String email,
+                                     @RequestParam(value = "password") String password,
+                                     @RequestParam(value = "password_repeat") String passwordRepeat,
+                                     @RequestParam(value = "img", required = false) MultipartFile file) {
         final RegisterWrapper request = new RegisterWrapper(name, email, password, passwordRepeat, file);
         final User curUser = prepareEnviron(session);
         if (curUser == null) {

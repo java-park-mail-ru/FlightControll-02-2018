@@ -36,9 +36,10 @@ public final class UsersManager {
         try {
             final Number id = ID_GENERATOR.getAndIncrement();
             if (userNotContains(id) && checkName(params.getUserName())) {
-                user = new User(id, params.getEmail(), params.getUserName(), params.getPassword(), params.getImg());
+                user = new User(id, params.getEmail(), params.getUserName(), params.getPassword());
+                user.setAvatar(params.getImg());
+                usersMap.put(id, user);
             }
-            usersMap.put(id, user);
         } catch (IOException exception) {
             logger.error("avatar is corrupted");
         }
@@ -77,13 +78,14 @@ public final class UsersManager {
     }
 
     public ArrayList<User> getLeaders(int page, int size) {
-        if ((page - 1) * size > usersMap.size()) {
-            return new ArrayList<>();
-        }
         final ArrayList<User> ratingTable = new ArrayList<>(usersMap.values());
         ratingTable.sort(ratingComparator);
         final int offset = (page - 1) * size;
-        return new ArrayList<>(ratingTable.subList(offset, offset + size));
+        int toIndex = offset + size;
+        if (offset + size > usersMap.size()) {
+            toIndex = usersMap.size() - offset;
+        }
+        return new ArrayList<>(ratingTable.subList(offset, toIndex));
     }
 
     public int getLeadersCount() {

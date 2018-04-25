@@ -46,9 +46,12 @@ public class Validator {
         validateField("pass", pass, 6);
         validateField("repass", rePass, 6);
         if (!pass.equals(rePass) || pass.equals(name) || pass.equals(email)) {
-            throw new RequestParamsException("password", "Password is equals to another fields");
+            throw new RequestParamsException("pass", "Password is equals to another fields");
         }
-        validateImage(file);
+
+        if(file != null && !file.isEmpty()) {
+            validateImage(file);
+        }
     }
 
     public static void validate(PaginateWrapper wrapper) throws RequestParamsException {
@@ -66,7 +69,7 @@ public class Validator {
 
     public static void validateImage(final MultipartFile file) throws RequestParamsException {
         final String contentType = file.getContentType();
-        if (file.isEmpty() && !(contentType.equals("image/jpeg") || contentType.equals("image/png"))) {
+        if (!(contentType.equals("image/jpeg") || contentType.equals("image/png"))) {
             throw new RequestParamsException("image", "Image is not valid");
         }
     }

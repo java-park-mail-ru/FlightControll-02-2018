@@ -11,6 +11,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 
 @JsonAutoDetect(
         fieldVisibility = JsonAutoDetect.Visibility.NONE,
@@ -30,7 +31,7 @@ public class User {
     private String name;
 
     @JsonProperty
-    private final int rate = 0;
+    private int rate = 0;
 
     @JsonProperty
     private String avatar;
@@ -42,27 +43,30 @@ public class User {
         return rate;
     }
 
-    public User(Number id, String email, String login, String pass, MultipartFile avatar) throws IOException {
+    public User(Number id, String email, String login, String pass) {
         this.id = id;
         this.email = email;
         this.name = login;
-        setAvatar(avatar);
         changePass(pass);
+        //todo: for test purposes, delete it
+        this.rate = new Random().nextInt(6);
     }
 
     public void setAvatar(MultipartFile avatar) throws IOException {
-        final StringBuilder base64Avatar = new StringBuilder();
-        base64Avatar.append("data:");
-        base64Avatar.append(avatar.getContentType());
-        base64Avatar.append(";base64,");
-        base64Avatar.append(
-                StringUtils.newStringUtf8(
-                        Base64.encodeBase64(
-                                avatar.getBytes(), false
-                        )
-                )
-        );
-        this.avatar = base64Avatar.toString();
+        if(avatar != null) {
+            final StringBuilder base64Avatar = new StringBuilder();
+            base64Avatar.append("data:");
+            base64Avatar.append(avatar.getContentType());
+            base64Avatar.append(";base64,");
+            base64Avatar.append(
+                    StringUtils.newStringUtf8(
+                            Base64.encodeBase64(
+                                    avatar.getBytes(), false
+                            )
+                    )
+            );
+            this.avatar = base64Avatar.toString();
+        }
     }
 
     public String getAvatar() {
