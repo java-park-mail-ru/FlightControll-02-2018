@@ -77,7 +77,7 @@ public final class UsersManager {
     }
 
     public ArrayList<User> getLeaders(int page, int size) {
-        if( (page-1) * size > usersMap.size()) {
+        if ((page - 1) * size > usersMap.size()) {
             return new ArrayList<>();
         }
         final ArrayList<User> ratingTable = new ArrayList<>(usersMap.values());
