@@ -1,7 +1,6 @@
 package ru.technopark.flightcontrol.wrappers;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.beans.factory.annotation.Required;
 import org.springframework.web.multipart.MultipartFile;
 
 public class RegisterWrapper {

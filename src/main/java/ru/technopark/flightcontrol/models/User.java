@@ -53,7 +53,7 @@ public class User {
     }
 
     public void setAvatar(MultipartFile avatar) throws IOException {
-        if(avatar != null) {
+        if (avatar != null) {
             final StringBuilder base64Avatar = new StringBuilder();
             base64Avatar.append("data:");
             base64Avatar.append(avatar.getContentType());

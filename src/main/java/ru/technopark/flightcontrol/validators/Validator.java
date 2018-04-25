@@ -49,7 +49,7 @@ public class Validator {
             throw new RequestParamsException("pass", "Password is equals to another fields");
         }
 
-        if(file != null && !file.isEmpty()) {
+        if (file != null && !file.isEmpty()) {
             validateImage(file);
         }
     }
