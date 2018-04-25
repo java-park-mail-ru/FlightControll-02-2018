@@ -14,6 +14,7 @@ import ru.technopark.flightcontrol.wrappers.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 //@CrossOrigin(origins = "https://flight-control-test.herokuapp.com", allowCredentials = "true", maxAge = 3600)
 @CrossOrigin(origins = "*", allowCredentials = "true", maxAge = 3600)
@@ -129,13 +130,16 @@ public class UsersService {
     @PostMapping(value = "/leaders", consumes = "application/json")
     public ResponseEntity leaders(HttpSession session, @RequestBody PaginateWrapper request) {
         final ArrayList<User> leaders;
+        final HashMap<String, Object> response = new HashMap<>();
         try {
             Validator.validate(request);
             leaders = manager.getLeaders(request.getPage(), request.getSize());
+            response.put("leaders", leaders);
+            response.put("count", manager.getLeadersCount());
         } catch (RequestParamsException exception) {
             return ResponseEntity.badRequest().body(exception.getFieldErrors());
         }
-        return  ResponseEntity.ok(leaders);
+        return  ResponseEntity.ok(response);
     }
 
 
